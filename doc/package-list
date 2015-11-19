@@ -1,0 +1,12 @@
+main
+mvc.comando
+mvc.control
+mvc.excepciones
+mvc.modelo
+mvc.modelo.factoria
+mvc.modelo.jugador
+mvc.modelo.modo
+mvc.modelo.movimiento
+mvc.modelo.reglas
+mvc.otros
+mvc.vista
