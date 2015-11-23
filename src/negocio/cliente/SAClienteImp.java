@@ -138,8 +138,26 @@ public class SAClienteImp implements SACliente{
 
 	@Override
 	public ArrayList<TransferCliente> topTenClientes() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+
+		ArrayList<TransferCliente> listaTopClientes = null;
+		TransactionManager t = TransactionManager.getInstance();
+		Transaccion transaccion = t.nuevaTransaccion();
+		DAOCliente daoCli = FactoriaDAO.getInstance().generaDAOCliente();
+		
+		transaccion.start();
+		
+		try {
+			listaTopClientes = daoCli.topTenClientes();
+		}
+		catch (ExcepcionSQL e){
+			throw e;
+		}
+		finally {
+			t.eliminaTransaccion();
+		}
+		
+		
+		return listaTopClientes;
 	}
 
 }

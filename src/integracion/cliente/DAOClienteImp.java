@@ -33,6 +33,8 @@ public class DAOClienteImp implements DAOCliente{
 	private final String modificaSocio = "Update `mshoes`.`Cliente` set `DNI` = ?, `NOMBRE` = ?, `APELLIDOS` = ?, "
 			+ "`LIMITE_CREDITO` = ? WHERE `ID_CLIENTE` = ? ";
 	
+	private final String topTenClientes = "SELECT TOP (10) *, count(ID_VENTAS) AS  `NUM_COMPRAS` FROM `mshoes`.`Cliente` INNER JOIN " 
+			+ "`mshoes`.`Ventas` ON `mshoes`.`Client`.`ID_CLIENTE` = `mshoes`.`Ventas`.`ID_CLIENTE` GROUP BY `ID_CLIENTE` ORDER BY `NUM_COMPRAS` DESC ";
 	
 	
 	public boolean altaClienteNoSocio(TransferCliente c) throws SQLException {
@@ -253,7 +255,7 @@ public class DAOClienteImp implements DAOCliente{
 				c.setActivo(resultado.getBoolean("Activo"));
 				c.setLimiteCredito(resultado.getFloat("Limite_Credito"));
 				c.setNewsletter(resultado.getBoolean("Newsletter"));	
-				clientes.add(c); //Añadimos el cliente a la lista
+				clientes.add(c); //Aï¿½adimos el cliente a la lista
 			}
 			
 		}
@@ -269,9 +271,38 @@ public class DAOClienteImp implements DAOCliente{
 	@Override
 	public ArrayList<TransferCliente> topTenClientes() throws SQLException {
 		
+		TransferCliente c = null;
+		ArrayList<TransferCliente> clientes = new ArrayList<TransferCliente>();
+		Transaccion transaccion = TransactionManager.getInstance().getTransaction();
+		Connection conexion = transaccion.getResource();
 		
+		try {
+			PreparedStatement lista = conexion.prepareStatement(topTenClientes);
+			ResultSet resultado = lista.executeQuery();
+			
+			
+			while(resultado.next()) {
+				
+				c = new TransferCliente(); //Crea un objeto por cliente
+				c.setIDCliente(resultado.getInt("ID_Cliente"));
+				c.setDNI(resultado.getString("DNI"));
+				c.setNombre(resultado.getString("Nombre"));
+				c.setApellidos(resultado.getString("Apellidos"));
+				c.setActivo(resultado.getBoolean("Activo"));
+				c.setLimiteCredito(resultado.getFloat("Limite_Credito"));
+				c.setNewsletter(resultado.getBoolean("Newsletter"));
+				// como hacemos para mostrar el num de ventas? creando un nuevo atributo?? 
+				clientes.add(c); //Aï¿½adimos el cliente a la lista
+			}
+			
+		}
+		catch (ExcepcionSQL e){
+			
+			JdbcUtils.printSQLException(e);
+			throw new ExcepcionSQL("Error al listar los clientes");
+		}
 		
-		return null;
+		return clientes;
 	}
 
 }
