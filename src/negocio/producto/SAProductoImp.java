@@ -41,6 +41,7 @@ public class SAProductoImp implements SAProducto {
 				throw new ExcepcionSQL("Es necesario que el stock este entre 0 y 999");
 			}
 			
+			
 		}
 		catch (ExcepcionSQL e){
 			transaccion.rollback();

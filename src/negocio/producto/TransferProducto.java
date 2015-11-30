@@ -7,7 +7,14 @@ public class TransferProducto {
 	private String color;
 	private boolean activo;
 	private int stock;
+	private float precio;
 	
+	public float getPrecio() {
+		return precio;
+	}
+	public void setPrecio(float precio) {
+		this.precio = precio;
+	}
 	public int getIDProducto() {
 		return IDProducto;
 	}

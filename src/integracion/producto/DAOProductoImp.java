@@ -29,7 +29,7 @@ public class DAOProductoImp implements DAOProducto{
 	private final String modificaProducto = "Update `mshoes`.`Producto` set `MARCA` = ?, `TIPO` = ?, `COLOR` = ?, "
 			+ "`STOCK` = ? WHERE `ID_PRODUCTO` = ? ";
 	
-	//private final String topProducto = "" este falta.
+	//private final String topProducto = "Select Max(
 
 	@Override
 	public boolean altaProducto(TransferProducto t) throws SQLException {
@@ -193,7 +193,7 @@ public class DAOProductoImp implements DAOProducto{
 
 	@Override
 	public TransferProducto topProducto() throws SQLException { // falta
-		// TODO Auto-generated method stub
+			
 		return null;
 	}
 }
