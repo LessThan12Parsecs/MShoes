@@ -29,7 +29,8 @@ public class DAOProductoImp implements DAOProducto{
 	private final String modificaProducto = "Update `mshoes`.`Producto` set `MARCA` = ?, `TIPO` = ?, `COLOR` = ?, "
 			+ "`STOCK` = ? WHERE `ID_PRODUCTO` = ? ";
 	
-	//private final String topProducto = "Select Max(
+	private final String topProducto = "Select `ID_PRODUCTO`,SUM(CANTIDAD) AS `NUM_VENTAS` FROM `mshoes`.`linea_de_venta` "
+			+ "GROUP BY `ID_PRODUCTO` ORDER BY `NUM_VENTAS` DESC LIMIT 1";
 
 	@Override
 	public boolean altaProducto(TransferProducto t) throws SQLException {
@@ -192,8 +193,30 @@ public class DAOProductoImp implements DAOProducto{
 
 
 	@Override
-	public TransferProducto topProducto() throws SQLException { // falta
+	public TransferProducto topProducto() throws SQLException { 
+		TransferProducto c = new TransferProducto();
+		Transaccion transaccion = TransactionManager.getInstance().getTransaction();
+		Connection conexion = transaccion.getResource();
+		
+		try {
+			PreparedStatement consulta = conexion.prepareStatement(topProducto);
+			ResultSet resultado = consulta.executeQuery();
 			
-		return null;
+			resultado.next();
+				
+			c.setIDProducto(resultado.getInt("ID_Producto"));
+			//Hace Falta otro atributo para la cantidad.
+
+		
+			
+		}
+		catch (ExcepcionSQL e){
+			
+			JdbcUtils.printSQLException(e);
+			throw new ExcepcionSQL("Error en la consulta del topProducto");
+			
+		}
+		
+		return c;
 	}
 }

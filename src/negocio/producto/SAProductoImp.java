@@ -115,9 +115,26 @@ public class SAProductoImp implements SAProducto {
 	}
 
 	@Override
-	public ArrayList<TransferProducto> topProducto() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public TransferProducto topProducto() throws SQLException {
+		TransferProducto p = null;
+		TransactionManager t = TransactionManager.getInstance();
+		Transaccion transaccion = t.nuevaTransaccion();
+		DAOProducto daoProd = FactoriaDAO.getInstance().generaDAOProducto();
+		
+		transaccion.start();
+		
+		try {
+			p = daoProd.topProducto();
+		}
+		catch (ExcepcionSQL e){
+			throw e;
+		}
+		finally {
+			t.eliminaTransaccion();
+		}
+		
+		
+		return p;
 	}
 
 }

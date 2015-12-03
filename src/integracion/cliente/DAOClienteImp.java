@@ -33,8 +33,8 @@ public class DAOClienteImp implements DAOCliente{
 	private final String modificaSocio = "Update `mshoes`.`Cliente` set `DNI` = ?, `NOMBRE` = ?, `APELLIDOS` = ?, "
 			+ "`LIMITE_CREDITO` = ? WHERE `ID_CLIENTE` = ? ";
 	
-	private final String topTenClientes = "SELECT TOP (10) *, count(ID_VENTAS) AS  `NUM_COMPRAS` FROM `mshoes`.`Cliente` INNER JOIN " 
-			+ "`mshoes`.`Ventas` ON `mshoes`.`Client`.`ID_CLIENTE` = `mshoes`.`Ventas`.`ID_CLIENTE` GROUP BY `ID_CLIENTE` ORDER BY `NUM_COMPRAS` DESC ";
+	private final String topTenClientes = "SELECT *, count(ID_VENTAS) AS  `NUM_COMPRAS` FROM `mshoes`.`Cliente` INNER JOIN " 
+			+ "`mshoes`.`Ventas` ON `mshoes`.`Client`.`ID_CLIENTE` = `mshoes`.`Ventas`.`ID_CLIENTE` GROUP BY `ID_CLIENTE` ORDER BY `NUM_COMPRAS` DESC LIMIT 10 ";
 	
 	
 	public boolean altaClienteNoSocio(TransferCliente c) throws SQLException {

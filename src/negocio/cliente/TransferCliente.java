@@ -1,6 +1,8 @@
 package negocio.cliente;
 
 public class TransferCliente {
+	
+	//hay que añadir atributos para las consultas?
 	private int IDCliente;
 	private String DNI;
 	private String nombre;

@@ -11,5 +11,5 @@ public interface SAProducto {
 	public boolean modificarProducto(TransferProducto p) throws SQLException;
 	public TransferProducto consultarUnProducto(int IDProducto) throws SQLException;
 	public ArrayList<TransferProducto> listarProductos() throws SQLException;
-	public ArrayList<TransferProducto> topProducto() throws SQLException;
+	public TransferProducto topProducto() throws SQLException;
 }

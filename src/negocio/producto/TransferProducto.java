@@ -1,6 +1,7 @@
 package negocio.producto;
 
 public class TransferProducto {
+	//hay que añadir atributos??
 	private int IDProducto;
 	private String marca;
 	private String tipo;
